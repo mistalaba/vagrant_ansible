@@ -16,9 +16,6 @@
     state: present
     update_cache: yes
 
-- name: Upgrade pip
-  pip: name=pip state=latest
-
 - name: update .bash_aliases
   become_user: vagrant
   lineinfile:
@@ -27,3 +24,13 @@
     mode: 0644
     state: present
     create: yes
+
+- name: Set up global requirements
+  pip:
+    requirements: /vagrant/ansible_requirements.txt
+
+- name: Set up venv, install python packages
+  become_user: vagrant
+  pip:
+    name: cookiecutter
+    virtualenv: /home/vagrant/venv
