@@ -9,6 +9,7 @@ Vagrant.configure("2") do |config|
   config.vm.network "forwarded_port", guest: 5432, host: 5434 # Postgres
 
   config.vm.synced_folder "src/", "/home/vagrant/app"
+  config.vm.synced_folder "../test_outside/", "/home/vagrant/separate_app"
 
   config.vm.provision "ansible_local" do |ansible|
     ansible.playbook = "setup.yml"
