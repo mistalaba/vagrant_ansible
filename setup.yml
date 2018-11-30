@@ -4,8 +4,8 @@
   become: yes # This means that all tasks will be executed with sudo
   roles:
     - base
-    - postgres
     - python
+    - postgres
     - redis
 
   vars_files:
