@@ -57,3 +57,11 @@
       export WORKON_HOME=$HOME/.virtualenvs
       export PROJECT_HOME=$HOME/Devel
       source "{{ home_directory }}/.local/bin/virtualenvwrapper.sh"
+
+- name: Make a virtualenv
+  shell: "{{ wrapper_bin }} && mkvirtualenv {{ project_name }}"
+  args:
+    executable: /bin/bash
+    creates: "{{ virtualenv_dir}}/{{ project_name }}"
+  environment:
+    path: /usr/local/bin:/usr/bin:/bin
