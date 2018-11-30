@@ -1,0 +1,7 @@
+- name: Update apt
+  apt: update_cache=yes
+
+- name: Install base packages
+  apt:
+    name : ['locales', 'build-essential', 'acl', 'ntp', 'htop', 'git', 'tcl']
+    state: present

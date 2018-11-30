@@ -3,17 +3,10 @@
 - hosts: all
   become: yes # This means that all tasks will be executed with sudo
   roles:
+    - base
     - postgres
     - python
+    - redis
 
   vars_files:
     - env_vars/base.yml
-
-  tasks:
-    - name: Update apt
-      apt: update_cache=yes
-
-    - name: Install base packages
-      apt:
-        name : ['locales', 'build-essential', 'acl', 'ntp', 'htop', 'git']
-        state: present
