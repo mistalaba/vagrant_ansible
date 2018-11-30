@@ -30,6 +30,12 @@
 #     state: present
 #     create: yes
 
+- name: upgrade pip
+  pip:
+    name: pip
+    executable: pip3
+    extra_args: --upgrade
+
 - name: Set up global requirements
   pip:
     requirements: /vagrant/ansible_requirements.txt
