@@ -1,6 +1,5 @@
 ---
 
-project_name: my_project
 ansible_python_interpreter: /usr/bin/python3
 password: hashed_password
 # db_name: project_db
@@ -9,6 +8,5 @@ db_password: fee1g00d
 # created with:
 # python -c "from passlib.hash import sha512_crypt; import getpass; print(sha512_crypt.using(rounds=5000).hash(getpass.getpass()))"
 postgres_password: $6$Trey7ZM8T9aJC8dX$IcqI4J4FNiOZVGNPRs325FdgGS4gX86/2SSbwqkw/8btEmtgQYBBDWZ2cttt74IDNqlA6fJYBZyPyyB5So1uP.
-home_directory: /home/vagrant
 wrapper_bin: /home/vagrant/.local/bin/virtualenvwrapper.sh
 virtualenv_dir: /home/vagrant/.virtualenvs

@@ -9,4 +9,5 @@
     - redis
 
   vars_files:
+    - vagrant.yml
     - env_vars/base.yml

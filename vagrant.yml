@@ -1,0 +1,6 @@
+---
+ip_address: 192.168.0.10
+vm_name: example
+server_domain: example.dev
+home_directory: /home/vagrant
+project_name: my_project
