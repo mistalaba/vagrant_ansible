@@ -1,7 +1,7 @@
 ---
 - name: Install pip
   apt:
-    name : ['python3-pip']
+    name : python3-pip
     state: present
 
 # - name: Add key for jonathonf PPA
@@ -36,6 +36,11 @@
     executable: pip3
     extra_args: --upgrade
 
+- name: remove apt pip
+  apt:
+    name: python3-pip
+    state: absent
+
 - name: Set up global requirements
   pip:
     requirements: /vagrant/ansible_requirements.txt
@@ -46,7 +51,6 @@
   pip:
     name: cookiecutter
     virtualenv: "{{ home_directory }}/.virtualenvs/{{ project_name }}"
-    executable: pip3
 
 - name: Install virtualenvwrapper
   become_user: vagrant
