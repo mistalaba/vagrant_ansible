@@ -13,3 +13,14 @@
     owner: vagrant
     group: vagrant
     mode: 0644
+
+- name: set up aliases
+  blockinfile:
+    dest: "{{ home_directory }}/.bash_aliases"
+    insertafter: EOF
+    state: present
+    create: yes
+    block: |
+      # Shortcuts for the project
+      alias activate="cd $HOME/app/{{ project_name }}; workon {{ project_name }}"
+      alias runserver="cd $HOME/app/{{ project_name }}; python manage.py runserver 0.0.0.0:8000"
