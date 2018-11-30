@@ -215,3 +215,4 @@ pip-selfcheck.json
 .history
 
 # End of https://www.gitignore.io/api/python,django,vagrant,ansible,visualstudiocode
+src/
