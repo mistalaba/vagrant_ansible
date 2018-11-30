@@ -1,7 +1,15 @@
 - name: Update apt
   apt: update_cache=yes
 
-- name: Install base packages
+- name: install base packages
   apt:
     name : ['locales', 'build-essential', 'acl', 'ntp', 'htop', 'git', 'tcl']
     state: present
+
+- name: copy .dircolors
+  copy:
+    src: files/.dircolors
+    dest: "{{ home_directory }}/"
+    owner: vagrant
+    group: vagrant
+    mode: 0644
