@@ -5,6 +5,14 @@ settings = YAML.load_file 'vagrant.yml'
 
 Vagrant.configure("2") do |config|
   config.vm.box = "ubuntu/xenial64"
+
+  config.trigger.after :halt do |trigger|
+    trigger.info = "Dump database"
+    trigger.run_remote = {
+      inline: "pg_dump -Fc " + settings['project_name'] + " -f /vagrant/" + settings['project_name'] + ".dump"
+    }
+  end
+
   config.ssh.insert_key = false
   config.vm.network "private_network", ip: settings['ip_address']
   config.vm.network "forwarded_port", guest: 8000, host: 8000 # Main site
