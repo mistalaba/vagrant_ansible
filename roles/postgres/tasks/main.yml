@@ -76,3 +76,11 @@
       insertbefore=BOF
       backrefs=yes
   notify: restart postgresql
+
+- name: create .pgpass
+  become_user: vagrant
+  copy:
+    dest: "{{ home_directory }}/.pgpass"
+    content: |
+      *:*:{{ project_name }}:vagrant:{{ db_password }}
+    mode: 0600
