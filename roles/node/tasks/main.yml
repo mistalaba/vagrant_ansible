@@ -1,0 +1,15 @@
+---
+# Taken from https://gist.github.com/komuw/b3b5d24977d4df7bd549
+- name: Install nvm
+  become_user: vagrant
+  shell: >
+    curl https://raw.githubusercontent.com/creationix/nvm/{{ nvm_version }}/install.sh | sh
+    creates={{ home_directory }}/.nvm/nvm.sh
+
+- name: Install Node.js
+  become_user: vagrant
+  shell: '. {{ home_directory }}/.nvm/nvm.sh && nvm install node'
+  args:
+    creates: "{{ home_directory }}/.nvm/versions/node"
+    chdir: "{{ home_directory }}"
+    executable: /bin/bash
