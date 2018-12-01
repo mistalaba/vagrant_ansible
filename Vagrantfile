@@ -6,10 +6,11 @@ settings = YAML.load_file 'vagrant.yml'
 Vagrant.configure("2") do |config|
   config.vm.box = "ubuntu/xenial64"
 
-  config.trigger.after :halt do |trigger|
+  config.trigger.before [:destroy, :halt] do |trigger|
     trigger.info = "Dump database"
     trigger.run_remote = {
-      inline: "pg_dump -Fc " + settings['project_name'] + " -f /vagrant/" + settings['project_name'] + ".dump"
+      inline: "pg_dump -Fc #{settings['project_name']} -f /vagrant/#{settings['project_name']}.dump",
+      privileged: false
     }
   end
 
