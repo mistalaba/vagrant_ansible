@@ -6,3 +6,5 @@ home_directory: /home/vagrant
 project_name: my_project
 nvm_version: v0.33.11
 node_version: v10.14.1
+python_version: python3
+pip_version: pip3

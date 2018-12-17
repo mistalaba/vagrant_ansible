@@ -13,7 +13,7 @@
 
 - name: Install dependencies for PostgreSQL
   apt:
-    name: ['libpq-dev', 'python3-psycopg2']
+    name: ['libpq-dev', '{{ python_version }}-psycopg2']
 
 - name: Start PostgreSQL and enable at boot
   service: name=postgresql
