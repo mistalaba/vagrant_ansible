@@ -12,7 +12,7 @@
 
 # - name: Add jonathonf PPA
 #   apt_repository:
-#     repo: deb http://ppa.launchpad.net/jonathonf/python-3.7/ubuntu xenial main
+#     repo: deb http://ppa.launchpad.net/jonathonf/python-3.7/ubuntu bionic main
 #     state: present
 
 # - name: Install Python 3.7

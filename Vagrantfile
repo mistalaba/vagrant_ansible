@@ -4,7 +4,7 @@ require 'yaml'
 settings = YAML.load_file 'vagrant.yml'
 
 Vagrant.configure("2") do |config|
-  config.vm.box = "ubuntu/xenial64"
+  config.vm.box = "ubuntu/bionic64"
 
   # config.trigger.before [:destroy, :halt] do |trigger|
   #   trigger.info = "Dump database"
