@@ -25,5 +25,6 @@
       source "{{ home_directory }}/.local/bin/virtualenvwrapper.sh"
 
 - name: Create the virtualenv
+  become_user: vagrant
   command: virtualenv {{ virtualenv_dir}}/{{ project_name }} --no-site-packages
            creates={{ virtualenv_dir}}/{{ project_name }}/bin/activate
