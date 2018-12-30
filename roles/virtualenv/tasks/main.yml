@@ -1,0 +1,29 @@
+---
+# - name: Set up venv, install python packages
+#   become_user: vagrant
+#   pip:
+#     name: cookiecutter
+#     virtualenv: "{{ home_directory }}/.virtualenvs/{{ project_name }}"
+
+- name: Install virtualenvwrapper
+  become_user: vagrant
+  pip:
+    name: virtualenvwrapper
+    extra_args: --user
+    executable: "{{ pip_version }}"
+
+- name: Update .bashrc for virtualenvwrapper
+  blockinfile:
+    dest: "{{ home_directory }}/.bashrc"
+    insertafter: EOF
+    state: present
+    block: |
+      # Virtualenvwrapper
+      export "VIRTUALENVWRAPPER_PYTHON=/usr/bin/{{ python_version }}"
+      export WORKON_HOME=$HOME/.virtualenvs
+      export PROJECT_HOME=$HOME/Devel
+      source "{{ home_directory }}/.local/bin/virtualenvwrapper.sh"
+
+- name: Create the virtualenv
+  command: virtualenv {{ virtualenv_dir}}/{{ project_name }} --no-site-packages
+           creates={{ virtualenv_dir}}/{{ project_name }}/bin/activate
