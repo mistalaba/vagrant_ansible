@@ -24,20 +24,3 @@
       # Shortcuts for the project
       alias activate="cd $HOME/app/{{ project_name }}; workon {{ project_name }}"
       alias runserver="cd $HOME/app/{{ project_name }}; python manage.py runserver 0.0.0.0:8000"
-
-- name: Create / remove a local node_modules directory
-  become_user: vagrant
-  file:
-    path: "{{ home_directory }}/node_modules_app"
-    state: 'directory'
-
-- name: Mount / unmount node_modules
-  mount:
-    path: "{{ home_directory }}/app/node_modules"
-    src: "{{ home_directory }}/node_modules_app"
-    state: 'mounted'
-    fstype: none
-    opts: bind
-    boot: yes
-  become: yes
-  become_user: root
