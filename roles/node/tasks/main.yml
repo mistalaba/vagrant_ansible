@@ -1,20 +1,20 @@
 ---
-- name: Create / remove a local node_modules directory
-  become_user: vagrant
-  file:
-    path: "{{ home_directory }}/node_modules_app"
-    state: 'directory'
+# - name: Create / remove a local node_modules directory
+#   become_user: vagrant
+#   file:
+#     path: "{{ home_directory }}/node_modules_app"
+#     state: 'directory'
 
-- name: Mount / unmount node_modules
-  mount:
-    path: "{{ home_directory }}/app/node_modules"
-    src: "{{ home_directory }}/node_modules_app"
-    state: 'mounted'
-    fstype: none
-    opts: bind
-    boot: yes
-  become: yes
-  become_user: root
+# - name: Mount / unmount node_modules
+#   mount:
+#     path: "{{ home_directory }}/app/node_modules"
+#     src: "{{ home_directory }}/node_modules_app"
+#     state: 'mounted'
+#     fstype: none
+#     opts: bind
+#     boot: yes
+#   become: yes
+#   become_user: root
 
 # Taken from https://gist.github.com/komuw/b3b5d24977d4df7bd549
 - name: Install nvm

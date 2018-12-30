@@ -31,4 +31,14 @@ Vagrant.configure("2") do |config|
     end
     ansible.verbose = "v"
   end
+
+  config.vm.provision "shell", inline: <<-SHELL
+    echo "Preparing local node_modules folder…"
+    mkdir #{settings['home_directory']}/node_modules_app
+    chown vagrant:vagrant #{settings['home_directory']}/node_modules_app
+  SHELL
+  config.vm.provision "shell", run: "always", inline: <<-SHELL
+    mount --bind #{settings['home_directory']}/node_modules_app #{settings['home_directory']}/app/node_modules
+  SHELL
+
 end
