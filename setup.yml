@@ -5,9 +5,10 @@
   roles:
     - base
     - python
+    - virtualenv
+    - node
     - postgres
     - redis
-    - node
 
   vars_files:
     - vagrant.yml
