@@ -22,16 +22,7 @@ Vagrant.configure("2") do |config|
   config.vm.synced_folder "src/", settings['home_directory'] + "/app"
   # config.vm.synced_folder "../test_outside/", settings['home_directory'] + "/separate_app"
 
-  config.vm.provision "ansible_local" do |ansible|
-    ansible.playbook = "setup.yml"
-    if settings['python_version'] == 'python3'
-      ansible.extra_vars = { ansible_python_interpreter:"/usr/bin/python3" }
-    else
-      ansible.extra_vars = { ansible_python_interpreter:"/usr/bin/python" }
-    end
-    ansible.verbose = "v"
-  end
-
+  # Set up node_modules before anything else, doesn't work within ansible :(
   config.vm.provision "shell", inline: <<-SHELL
     echo "Preparing local node_modules folder…"
     mkdir #{settings['home_directory']}/node_modules_app
@@ -41,4 +32,14 @@ Vagrant.configure("2") do |config|
     mount --bind #{settings['home_directory']}/node_modules_app #{settings['home_directory']}/app/node_modules
   SHELL
 
+
+  config.vm.provision "ansible_local" do |ansible|
+    ansible.playbook = "setup.yml"
+    if settings['python_version'] == 'python3'
+      ansible.extra_vars = { ansible_python_interpreter:"/usr/bin/python3" }
+    else
+      ansible.extra_vars = { ansible_python_interpreter:"/usr/bin/python" }
+    end
+    ansible.verbose = "v"
+  end
 end
