@@ -1,21 +1,4 @@
 ---
-# - name: Create / remove a local node_modules directory
-#   become_user: vagrant
-#   file:
-#     path: "{{ home_directory }}/node_modules_app"
-#     state: 'directory'
-
-# - name: Mount / unmount node_modules
-#   mount:
-#     path: "{{ home_directory }}/app/node_modules"
-#     src: "{{ home_directory }}/node_modules_app"
-#     state: 'mounted'
-#     fstype: none
-#     opts: bind
-#     boot: yes
-#   become: yes
-#   become_user: root
-
 # Taken from https://gist.github.com/komuw/b3b5d24977d4df7bd549
 - name: Install nvm
   become_user: vagrant
@@ -30,3 +13,29 @@
     creates: "{{ home_directory }}/.nvm/versions/node"
     chdir: "{{ home_directory }}"
     executable: /bin/bash
+
+- name: Copy package.json to app
+  become_user: vagrant
+  template:
+    src: package.j2
+    dest: "{{ home_directory }}/app/package.json"
+    owner: vagrant
+    group: vagrant
+
+
+# These don't work because of
+#
+# - name: Install gulp globally
+#   become: yes
+#   npm:
+#     name: gulp
+#     path: "{{ home_directory }}/app"
+#     executable: "{{ home_directory }}/.nvm/versions/node/v11.6.0/bin/npm"
+#     global: yes
+
+# - name: Install packages from package.json
+#   # become_user: vagrant
+#   npm:
+#     path: "{{ home_directory }}/app"
+#     executable: "{{ home_directory }}/.nvm/versions/node/v11.6.0/bin/npm"
+#     state: present
