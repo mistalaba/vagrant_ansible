@@ -45,3 +45,15 @@
   pip:
     requirements: /vagrant/ansible_requirements.txt
     executable: "{{ pip_version }}"
+
+- name: set up aliases
+  blockinfile:
+    dest: "{{ home_directory }}/.bash_aliases"
+    insertafter: EOF
+    state: present
+    create: yes
+    block: |
+      # Shortcuts for the project
+      alias activate="cd $HOME/app; workon {{ project_name }}"
+      alias runserver="activate; python manage.py runserver 0.0.0.0:8000"
+      alias shell="activate; python manage.py shell"
