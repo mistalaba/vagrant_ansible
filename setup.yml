@@ -9,6 +9,7 @@
     - node
     - postgres
     - redis
+    # - celery
 
   vars_files:
     - vagrant.yml
