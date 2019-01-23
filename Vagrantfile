@@ -5,6 +5,10 @@ settings = YAML.load_file 'vagrant.yml'
 
 Vagrant.configure("2") do |config|
   config.vm.box = "ubuntu/bionic64"
+  config.vm.hostname = settings['project_name']
+  config.vm.provider :virtualbox do |vb|
+    vb.name = settings['project_name']
+  end
 
   # config.trigger.before [:destroy, :halt] do |trigger|
   #   trigger.info = "Dump database"
