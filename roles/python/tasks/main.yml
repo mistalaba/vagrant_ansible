@@ -47,6 +47,7 @@
     executable: "{{ pip_version }}"
 
 - name: set up aliases
+  become_user: vagrant
   blockinfile:
     dest: "{{ home_directory }}/.bash_aliases"
     insertafter: EOF
