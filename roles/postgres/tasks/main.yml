@@ -8,7 +8,7 @@
 
 - name: Install PostgreSQL
   apt:
-    name: postgresql-10
+    name: postgresql-{{ pg_version }}
     state: present
 
 - name: Install dependencies for PostgreSQL
@@ -56,7 +56,7 @@
                   state=present
 
 - name: Ensure postgresql is listening on all localhost
-  lineinfile: dest=/etc/postgresql/10/main/postgresql.conf
+  lineinfile: dest=/etc/postgresql/{{ pg_version }}/main/postgresql.conf
       regexp='^#?listen_addresses\s*='
       line="listen_addresses = '*'"
       state=present
@@ -65,12 +65,12 @@
 
 - name: Update pg_hba.conf
   blockinfile:
-    dest: /etc/postgresql/10/main/pg_hba.conf
+    dest: /etc/postgresql/{{ pg_version }}/main/pg_hba.conf
     block: |
       host    all             all             192.168.32.10/24        md5
       host    all             all             10.0.2.2/24             md5
 
-- lineinfile: dest=/etc/postgresql/10/main/pg_hba.conf
+- lineinfile: dest=/etc/postgresql/{{ pg_version }}/main/pg_hba.conf
       regexp='local\s+all\s+all\s+peer'
       line='local all all md5'
       insertbefore=BOF
