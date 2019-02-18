@@ -1,37 +1,16 @@
 ---
+- name: Add an apt key by id from a keyserver
+  apt_key:
+    keyserver: keyserver.ubuntu.com
+    id: 136221EE520DDFAF0A905689B9316A7BC7917B12
 
-- name: download redis src
-  unarchive:
-    src: http://download.redis.io/redis-stable.tar.gz
-    copy: no
-    dest: /tmp
-    mode: u=rwx,g=rx,o=rx
-    owner: root
-    creates: /tmp/redis-stable
+- name: Add REdis repo to sources list
+  apt_repository: repo='deb http://ppa.launchpad.net/chris-lea/redis-server/ubuntu bionic main' state=present
 
-- name: make redis
-  make: chdir=/tmp/redis-stable
-
-- name: install redis (skip test for now)
-  make: chdir=/tmp/redis-stable target={{ item }}
-  become: yes
-  with_items:
-    - install
-
-- name: create /etc/redis, data, logs, and socket directories
-  file: path={{ item }} state=directory
-  with_items:
-    - /etc/redis
-    - /var/lib/redis
-    - /var/log/redis
-    - /var/run/redis
-
-- name: copy default redis.conf
-  # create a copy of the default redis.conf
-  copy: remote_src=True
-        src=/tmp/redis-stable/redis.conf
-        dest=/etc/redis/redis.conf
-  become: yes
+- name: install redis-server
+  apt:
+    name : ['redis-server']
+    state: present
 
 - name: bind to redis.bind_addr
   lineinfile: dest=/etc/redis/redis.conf
@@ -51,30 +30,5 @@
             line='dir /var/lib/redis'
             state=present
 
-- name: create redis group
-  group: name=redis state=present
-
-- name: create redis user
-  user: name={{ redis_user }}
-        group={{ redis_group }}
-        shell=/bin/bash
-        createhome=no
-
-- name: create redis-as-a-service
-  template: src=templates/redis.service.j2
-            dest=/etc/systemd/system/redis.service
-            owner=root
-            group=root
-            mode=0644
-
-- name: set permissions for redis
-  file: path={{ item }} state=touch owner=redis group=redis mode=0770
-  with_items:
-    - /etc/redis
-    - /var/lib/redis
-    - /var/log/redis
-    - /var/run/redis
-  become: yes
-
 - name: start redis
-  service: name=redis state=restarted enabled=yes
+  service: name=redis-server state=restarted enabled=yes
