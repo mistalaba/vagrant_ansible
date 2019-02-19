@@ -67,12 +67,19 @@
   blockinfile:
     dest: /etc/postgresql/{{ pg_version }}/main/pg_hba.conf
     block: |
-      host    all             all             192.168.32.10/24        md5
+      host    all             all             {{ ip_address }}/24        md5
       host    all             all             10.0.2.2/24             md5
 
 - lineinfile: dest=/etc/postgresql/{{ pg_version }}/main/pg_hba.conf
       regexp='local\s+all\s+all\s+peer'
       line='local all all md5'
+      insertbefore=BOF
+      backrefs=yes
+  notify: restart postgresql
+
+- lineinfile: dest=/etc/postgresql/{{ pg_version }}/main/pg_hba.conf
+      regexp='local\s+all\s+postgres\s+peer'
+      line='local all postgres trust'
       insertbefore=BOF
       backrefs=yes
   notify: restart postgresql
@@ -84,3 +91,13 @@
     content: |
       *:*:{{ project_name }}:vagrant:{{ db_password }}
     mode: 0600
+
+- name: export
+  become_user: vagrant
+  blockinfile:
+    dest: "{{ home_directory }}/.bashrc"
+    insertafter: EOF
+    state: present
+    create: yes
+    block: |
+      export PGDATABASE={{ project_name }}

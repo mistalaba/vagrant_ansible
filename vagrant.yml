@@ -1,9 +1,9 @@
 ---
 ip_address: 192.168.0.9
-vm_name: my_project
 server_domain: my_project.local
 home_directory: /home/vagrant
-project_name: my-project
+project_name: my_project
+hostname: my-project
 nvm_version: v0.33.11
 node_version: v10.14.1
 python_version: python3
