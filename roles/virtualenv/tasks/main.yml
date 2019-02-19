@@ -17,6 +17,7 @@
     dest: "{{ home_directory }}/.bashrc"
     insertafter: EOF
     state: present
+    marker: "# {mark} ANSIBLE MANAGED BLOCK VIRTUALENVWRAPPER"
     block: |
       # Virtualenvwrapper
       export "VIRTUALENVWRAPPER_PYTHON=/usr/bin/{{ python_version }}"
