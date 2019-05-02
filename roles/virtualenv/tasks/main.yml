@@ -23,7 +23,7 @@
       export "VIRTUALENVWRAPPER_PYTHON=/usr/bin/{{ python_version }}"
       export WORKON_HOME=$HOME/.virtualenvs
       export PROJECT_HOME=$HOME/Devel
-      source "{{ home_directory }}/.local/bin/virtualenvwrapper.sh"
+      source $HOME/.local/bin/virtualenvwrapper.sh
 
 - name: Create the virtualenv
   become_user: vagrant
