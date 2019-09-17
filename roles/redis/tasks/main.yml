@@ -1,34 +1,11 @@
----
-- name: Add an apt key by id from a keyserver
-  apt_key:
-    keyserver: keyserver.ubuntu.com
-    id: 136221EE520DDFAF0A905689B9316A7BC7917B12
+- name: Redis | Install Redis PPA
+  apt_repository: repo='ppa:chris-lea/redis-server' update_cache=yes
 
-- name: Add REdis repo to sources list
-  apt_repository: repo='deb http://ppa.launchpad.net/chris-lea/redis-server/ubuntu bionic main' state=present
+- name: Redis | Install Redis
+  apt: pkg=redis-server state=latest force=yes
 
-- name: install redis-server
-  apt:
-    name : ['redis-server']
-    state: present
-
-- name: bind to redis.bind_addr
-  lineinfile: dest=/etc/redis/redis.conf
-            regexp='^bind {{ ipv4_addr }}$'
-            line='bind {{ redis_bind_addr }}'
-            state=present
-
-- name: configure systemmd
-  lineinfile: dest=/etc/redis/redis.conf
-            regexp='^supervised no$'
-            line='supervised systemd'
-            state=present
-
-- name: store redis data in /var/lib/redis
-  lineinfile: dest=/etc/redis/redis.conf
-            regexp='^dir ./$'
-            line='dir /var/lib/redis'
-            state=present
-
-- name: start redis
-  service: name=redis-server state=restarted enabled=yes
+- name: Redis | Enable with systemd
+  systemd:
+    name: redis-server
+    enabled: yes
+    state: started
