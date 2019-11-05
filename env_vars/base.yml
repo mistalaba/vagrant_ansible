@@ -8,4 +8,4 @@ db_password: fee1g00d
 postgres_password: $6$Trey7ZM8T9aJC8dX$IcqI4J4FNiOZVGNPRs325FdgGS4gX86/2SSbwqkw/8btEmtgQYBBDWZ2cttt74IDNqlA6fJYBZyPyyB5So1uP.
 wrapper_bin: /home/vagrant/.local/bin/virtualenvwrapper.sh
 virtualenv_dir: /home/vagrant/.virtualenvs
-pg_version: 11
+pg_version: 12

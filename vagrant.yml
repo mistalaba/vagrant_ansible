@@ -4,7 +4,7 @@ server_domain: my_project.local
 home_directory: /home/vagrant
 project_name: my_project
 hostname: my-project
-nvm_version: v0.33.11
-node_version: v10.14.1
+nvm_version: v0.35.1
+node_version: v12.13.0
 python_version: python3
 pip_version: pip3
