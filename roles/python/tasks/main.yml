@@ -32,3 +32,23 @@
       alias activate="cd $HOME/app; workon {{ project_name }}"
       alias runserver="activate; python manage.py runserver 0.0.0.0:8000"
       alias shell="activate; python manage.py shell"
+
+- name: setup pyenv variables
+  become_user: vagrant
+  blockinfile:
+    path: "{{ home_directory }}/.bashrc"
+    marker: "# {mark} ANSIBLE MANAGED BLOCK PYENV"
+    insertafter: EOF
+    state: present
+    block: |
+      export PATH="/home/vagrant/.pyenv/bin:$PATH"
+      eval "$(pyenv init -)"
+      eval "$(pyenv virtualenv-init -)"
+  tags:
+    - debug
+
+- name: install pyenv
+  become_user: vagrant
+  shell: curl https://pyenv.run | bash
+  tags:
+    - debug
