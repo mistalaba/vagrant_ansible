@@ -6,5 +6,3 @@ project_name: my_project
 hostname: my-project
 nvm_version: v0.35.3
 node_version: v12.16.1
-python_version: python3
-pip_version: pip3

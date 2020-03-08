@@ -1,24 +1,23 @@
 ---
 - name: Install pip
   apt:
-    name : "{{ python_version }}-pip"
+    name : "python3-pip"
     state: present
 
 - name: upgrade pip
   pip:
     name: pip
-    executable: "{{ pip_version }}"
+    executable: pip3
     extra_args: --upgrade
 
-- name: remove apt pip
-  apt:
-    name: "{{ python_version }}-pip"
-    state: absent
+# - name: remove apt pip
+#   apt:
+#     name: "{{ python_version }}-pip"
+#     state: absent
 
 - name: Set up global requirements
   pip:
     requirements: /vagrant/ansible_requirements.txt
-    executable: "{{ pip_version }}"
 
 - name: set up aliases
   become_user: vagrant
