@@ -3,7 +3,7 @@
 
 - name: install base packages
   apt:
-    name : ['locales', 'build-essential', 'acl', 'ntp', 'htop', 'git', 'tcl', 'zlib1g-dev', 'libbz2-dev', 'libreadline-dev', 'python-openssl', 'libssl1.0-dev', 'libsqlite3-dev']
+    name : ['locales', 'build-essential', 'acl', 'ntp', 'htop', 'git', 'tcl', 'zlib1g-dev', 'libbz2-dev', 'libreadline-dev', 'python-openssl', 'libssl1.0-dev', 'libsqlite3-dev', 'libffi-dev']
     state: present
 
 - name: copy .dircolors
