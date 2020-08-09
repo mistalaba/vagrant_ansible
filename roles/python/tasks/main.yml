@@ -10,11 +10,6 @@
     executable: pip3
     extra_args: --upgrade
 
-# - name: remove apt pip
-#   apt:
-#     name: "{{ python_version }}-pip"
-#     state: absent
-
 - name: Set up global requirements
   pip:
     requirements: /vagrant/ansible_requirements.txt
@@ -46,8 +41,19 @@
   tags:
     - debug
 
+- name: install pyenv prerequisities
+  apt:
+    name : ['make', 'build-essential', 'libssl-dev', 'zlib1g-dev', 'libbz2-dev', 'libreadline-dev', 'libsqlite3-dev', 'wget', 'curl', 'llvm', 'libncurses5-dev', 'libncursesw5-dev', 'xz-utils', 'tk-dev', 'libffi-dev', 'liblzma-dev', 'python-openssl', 'git']
+    state: present
+
 - name: install pyenv
   become_user: vagrant
   shell: curl https://pyenv.run | bash
+  tags:
+    - debug
+
+- name: install poetry
+  become_user: vagrant
+  shell: curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python3
   tags:
     - debug

@@ -4,11 +4,18 @@ require 'yaml'
 settings = YAML.load_file 'vagrant.yml'
 
 Vagrant.configure("2") do |config|
-  config.vm.box = "ubuntu/bionic64"
+  config.vm.box = "ubuntu/focal64"
+  # config.vm.box = "ubuntu/bionic64"
   config.vm.box_check_update = false
   config.vm.hostname = settings['hostname']
   config.vm.provider :virtualbox do |vb|
     vb.name = settings['project_name']
+  end
+
+  # ubuntu/focal64 workaround
+  config.vm.provider 'virtualbox' do |v|
+    v.customize ["modifyvm", :id, "--uart1", "0x3F8", "4"]
+    v.customize ["modifyvm", :id, "--uartmode1", "file", File::NULL]
   end
 
   config.ssh.insert_key = false
@@ -32,6 +39,8 @@ Vagrant.configure("2") do |config|
 
   config.vm.provision "ansible_local" do |ansible|
     ansible.playbook = "setup.yml"
+    # ansible.install_mode = "pip3"
+    ansible.install_mode = :pip
     ansible.extra_vars = { ansible_python_interpreter:"/usr/bin/python3" }
     ansible.verbose = "v"
   end
